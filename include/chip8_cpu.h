@@ -14,7 +14,8 @@ typedef unsigned int CPU_STATUS;
 #define CPU_STATUS_FAIL_03 (CPU_STATUS)0xC0000003
 
 typedef struct _CHIP8CPU {
-	void* program_counter;
+	BYTE* base;
+	WORD* program_counter;
 	void* index_reg;
 	char timers[2];
 	char reg_v[16];

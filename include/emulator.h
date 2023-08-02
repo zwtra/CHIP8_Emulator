@@ -16,10 +16,10 @@ typedef struct _EMULATOR {
 	PGRAPHICS gpu;
 
 	void* memory;
-	void* ds_frame;
 	int program_size;
 
 } EMULATOR, *PEMULATOR;
 
 EMULATOR_STATUS initialise_emulator(PEMULATOR, void*);
 EMULATOR_STATUS emu_initialise_memory(PEMULATOR, void*);
+EMULATOR_STATUS emulator_start(PEMULATOR);
