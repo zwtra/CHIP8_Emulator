@@ -1,6 +1,7 @@
 #pragma once
 #include "chip8_cpu.h"
 #include "graphics.h"
+#include "stack.h"
 
 typedef unsigned int EMULATOR_STATUS;
 
@@ -23,3 +24,4 @@ typedef struct _EMULATOR {
 EMULATOR_STATUS initialise_emulator(PEMULATOR, void*);
 EMULATOR_STATUS emu_initialise_memory(PEMULATOR, void*);
 EMULATOR_STATUS emulator_start(PEMULATOR);
+EMULATOR_STATUS emulator_handle_cpu_req(CPU_STATUS);
