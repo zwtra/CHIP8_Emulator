@@ -24,6 +24,7 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 	if (emu_initialise_memory(emu, program))
 		return EMULATOR_STATUS_FAIL_04;
 
+	emu->cpu->program_counter = (int)emu->memory + 0x200;
 
 	return EMULATOR_STATUS_SUCCESS;
 }

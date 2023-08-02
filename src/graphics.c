@@ -1,6 +1,5 @@
 #include <Windows.h>
 #include "../include/graphics.h"
-#include "../include/chip8_cpu.h"
 
 PGRAPHICS initialise_graphics() {
 

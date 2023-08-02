@@ -1,4 +1,17 @@
 #pragma once
+#include <Windows.h>
+
+typedef unsigned int CPU_STATUS;
+
+#define CPU_STATUS_SUCCESS (CPU_STATUS)0x00000000
+
+#define CPU_GRAPHICS_UPDAT (CPU_STATUS)0x30000005
+#define CPU_GRAPHICS_REDRW (CPU_STATUS)0x30000006
+#define CPU_GRAPHICS_CLEAR (CPU_STATUS)0x30000007
+
+#define CPU_STATUS_INVALID (CPU_STATUS)0xC0000001
+#define CPU_STATUS_SIGSEGV (CPU_STATUS)0xC0000002
+#define CPU_STATUS_FAIL_03 (CPU_STATUS)0xC0000003
 
 typedef struct _CHIP8CPU {
 	void* program_counter;
@@ -8,3 +21,5 @@ typedef struct _CHIP8CPU {
 } CHIP8CPU, *PCHIP8CPU;
 
 PCHIP8CPU initialise_cpu();
+CPU_STATUS fde_cycle(PCHIP8CPU);
+

@@ -21,4 +21,5 @@ typedef struct _EMULATOR {
 
 } EMULATOR, *PEMULATOR;
 
-EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program);
+EMULATOR_STATUS initialise_emulator(PEMULATOR, void*);
+EMULATOR_STATUS emu_initialise_memory(PEMULATOR, void*);

@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\chip8_cpu.h" />
+    <ClInclude Include="include\chip8_cpu_internal.h" />
     <ClInclude Include="include\emulator.h" />
     <ClInclude Include="include\graphics.h" />
   </ItemGroup>

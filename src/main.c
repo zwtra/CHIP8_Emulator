@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 
 	while (1) {
 		SDL_PollEvent(&event);
+		fde_cycle(emu.cpu);
 	}
 
 	return 0;
