@@ -10,7 +10,8 @@ PCHIP8CPU initialise_cpu() {
 	}
 
 	chip8->index_reg = 0;
-	chip8->program_counter = 0;
+	chip8->program_counter = (WORD*)0x200;
+	chip8->base = 0;
 
 	memset(&(chip8->reg_v), 0, 16);
 	return chip8;
@@ -18,13 +19,15 @@ PCHIP8CPU initialise_cpu() {
 
 CPU_STATUS fde_cycle(PCHIP8CPU cpu) {
 	// Read WORD at PC
-	WORD ins = *(WORD*)cpu->program_counter;
+	WORD ins = *(WORD*)((int)cpu->program_counter + (int)cpu->base);
+	cpu->program_counter++;
 	WORD ins_type = ins & 0x1000;
 	
 	switch (ins_type) {
 	case 0x0000:
 		return ins_type_zero(ins);
 	case 0x1000:
+		
 		break;
 	case 0x6000:
 		break;
@@ -36,7 +39,7 @@ CPU_STATUS fde_cycle(PCHIP8CPU cpu) {
 		break;
 	}
 
-	return CPU_STATUS_SUCCESS;
+	return CPU_STATUS_INVALID;
 }
 
 CPU_STATUS ins_type_zero(WORD ins) {
