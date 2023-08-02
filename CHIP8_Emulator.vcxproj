@@ -134,12 +134,14 @@
     <ClCompile Include="src\emulator.c" />
     <ClCompile Include="src\graphics.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\stack.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\chip8_cpu.h" />
     <ClInclude Include="include\chip8_cpu_internal.h" />
     <ClInclude Include="include\emulator.h" />
     <ClInclude Include="include\graphics.h" />
+    <ClInclude Include="include\stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include "stack.h"
 
 typedef unsigned int CPU_STATUS;
 
@@ -19,6 +20,7 @@ typedef struct _CHIP8CPU {
 	void* index_reg;
 	char timers[2];
 	char reg_v[16];
+	STACK stack;
 } CHIP8CPU, *PCHIP8CPU;
 
 PCHIP8CPU initialise_cpu();

@@ -1,5 +1,6 @@
 #include "../include/chip8_cpu.h"
 #include "../include/chip8_cpu_internal.h"
+#include "../include/stack.h"
 
 PCHIP8CPU initialise_cpu() {
 
@@ -13,28 +14,34 @@ PCHIP8CPU initialise_cpu() {
 	chip8->program_counter = (WORD*)0x200;
 	chip8->base = 0;
 
+	init_stack(&chip8->stack);
 	memset(&(chip8->reg_v), 0, 16);
+
 	return chip8;
 }
 
 CPU_STATUS fde_cycle(PCHIP8CPU cpu) {
 	// Read WORD at PC
 	WORD ins = *(WORD*)((int)cpu->program_counter + (int)cpu->base);
+	ins = (ins >> 8) | (ins << 8);
 	cpu->program_counter++;
-	WORD ins_type = ins & 0x1000;
-	
+	WORD ins_type = ins & 0xF000;
+
 	switch (ins_type) {
 	case 0x0000:
-		return ins_type_zero(ins);
+		return ins_type_zero(cpu, ins);
 	case 0x1000:
-		
-		break;
+		cpu->program_counter = (WORD*)(ins & 0x0fff);
+		return CPU_STATUS_SUCCESS;
 	case 0x6000:
-		break;
+		cpu->reg_v[(ins & 0x0f00) >> 0x8] = ins & 0x00ff;
+		return CPU_STATUS_SUCCESS;
 	case 0x7000:
+		cpu->reg_v[(ins & 0x0f00) >> 0x8] += ins & 0x00ff;
 		break;
 	case 0xA000:
-		break;
+		cpu->index_reg = (void*)(ins & 0x0fff);
+		return CPU_STATUS_SUCCESS;
 	case 0xD000:
 		break;
 	}
@@ -42,10 +49,13 @@ CPU_STATUS fde_cycle(PCHIP8CPU cpu) {
 	return CPU_STATUS_INVALID;
 }
 
-CPU_STATUS ins_type_zero(WORD ins) {
+CPU_STATUS ins_type_zero(PCHIP8CPU cpu, WORD ins) {
 	switch (ins) {
-	case 0xE000:
+	case 0x00E0:
 		return CPU_GRAPHICS_CLEAR;
+	case 0x00EE:
+		cpu->program_counter = spop(&cpu->stack);
+		return CPU_STATUS_SUCCESS;
 	}
 	return CPU_STATUS_INVALID;
 }
