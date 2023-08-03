@@ -9,8 +9,8 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 		return EMULATOR_STATUS_FAIL_01;
 	}
 
-	emu->cpu = initialise_cpu();
-	emu->gpu = initialise_graphics();
+	emu->cpu = initialise_cpu(CHIP8_EMULATE);
+	emu->gpu = initialise_graphics(CPU_CUSTOM_WIDTH, CPU_CUSTOM_HEIGHT, 10);
 
 	emu->memory = VirtualAlloc(0, 4000, MEM_COMMIT, PAGE_READWRITE);
 

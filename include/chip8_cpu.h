@@ -26,6 +26,6 @@ typedef struct _CHIP8CPU {
 
 } CHIP8CPU, *PCHIP8CPU;
 
-PCHIP8CPU initialise_cpu();
+PCHIP8CPU initialise_cpu(int);
 CPU_STATUS fde_cycle(PCHIP8CPU);
 

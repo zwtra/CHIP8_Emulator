@@ -1,9 +1,6 @@
 #pragma once
 #include <SDL.h>
 
-#define SCALE_ENLARGE 10
-#define MAGIC_PIXEL 0x5a28
-
 #define CPU_CUSTOM_WIDTH	64
 #define CPU_CUSTOM_HEIGHT	32
 
@@ -29,7 +26,7 @@ typedef struct _GRAPHICS {
 
 } GRAPHICS, *PGRAPHICS;
 
-PGRAPHICS initialise_graphics();
+PGRAPHICS initialise_graphics(int, int, int);
 GRAPHICS_STATUS redraw(PGRAPHICS);
 GRAPHICS_STATUS gclear(PGRAPHICS);
 GRAPHICS_STATUS convert_pixel_format(PGRAPHICS);

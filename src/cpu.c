@@ -2,7 +2,7 @@
 #include "../include/chip8_cpu_internal.h"
 #include "../include/stack.h"
 
-PCHIP8CPU initialise_cpu() {
+PCHIP8CPU initialise_cpu(int cpu_type) {
 
 	PCHIP8CPU chip8 = malloc(sizeof(CHIP8CPU));
 

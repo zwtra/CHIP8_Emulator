@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
 	initialise_emulator(&emu, argv[1]);
 
 	emu.gpu->s_frame_buf[0] = 0xa1;
+	emu.gpu->s_frame_buf[0x64] = 0xa1;
 	emu.gpu->s_frame_buf[0xff] = 0x81;
 
 	convert_pixel_format(emu.gpu);
