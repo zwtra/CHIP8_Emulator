@@ -36,6 +36,7 @@ GRAPHICS_STATUS gclear(PGRAPHICS g) {
 }
 
 GRAPHICS_STATUS redraw(PGRAPHICS g) {
+	convert_pixel_format(g);
 	if (SDL_UpdateTexture(g->image, 0, g->f_frame_buf, g->frame_pitch))
 		return GRAPHICS_STATUS_FAIL_01;
 	if (SDL_RenderClear(g->renderer))
