@@ -3,8 +3,12 @@
 #include "stack.h"
 
 typedef unsigned int CPU_STATUS;
+typedef unsigned int CPU_FRAME_STATUS;
 
 #define CPU_STATUS_SUCCESS (CPU_STATUS)0x00000000
+
+#define CPU_FRAME_VF_0 (CPU_FRAME_STATUS)0x003030
+#define CPU_FRAME_VF_1 (CPU_FRAME_STATUS)0x003032
 
 #define CPU_GRAPHICS_UPDAT (CPU_STATUS)0x30000005
 #define CPU_GRAPHICS_REDRW (CPU_STATUS)0x30000006
@@ -18,11 +22,14 @@ typedef struct _CHIP8CPU {
 	BYTE* base;
 	WORD* program_counter;
 	void* index_reg;
+	BYTE* frame_buf;
+
 	char timers[2];
 	char reg_v[16];
 	STACK stack;
+
 } CHIP8CPU, *PCHIP8CPU;
 
-PCHIP8CPU initialise_cpu();
+PCHIP8CPU initialise_cpu(int);
 CPU_STATUS fde_cycle(PCHIP8CPU);
 

@@ -9,8 +9,8 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 		return EMULATOR_STATUS_FAIL_01;
 	}
 
-	emu->cpu = initialise_cpu();
-	emu->gpu = initialise_graphics();
+	emu->cpu = initialise_cpu(CHIP8_EMULATE);
+	emu->gpu = initialise_graphics(CPU_CUSTOM_WIDTH, CPU_CUSTOM_HEIGHT, 10);
 
 	emu->memory = VirtualAlloc(0, 4000, MEM_COMMIT, PAGE_READWRITE);
 
@@ -28,6 +28,7 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 	// Set Base Address of program in CPU struct
 
 	emu->cpu->base = (BYTE*)emu->memory;
+	emu->cpu->frame_buf = emu->gpu->s_frame_buf;
 
 	return EMULATOR_STATUS_SUCCESS;
 }
@@ -52,12 +53,18 @@ EMULATOR_STATUS emulator_start(PEMULATOR emu) {
 	while ((int)emu->cpu->program_counter < (int)(emu->program_size + 0x200)) { // gross casts
 		cpu_return = fde_cycle(emu->cpu);
 		if (cpu_return) {
-			emulator_handle_cpu_req(cpu_return);
+			emulator_handle_cpu_req(emu, cpu_return);
 		}
 	}
 	return EMULATOR_STATUS_SUCCESS;
 }
 
-EMULATOR_STATUS emulator_handle_cpu_req(CPU_STATUS cpustatus) {
+EMULATOR_STATUS emulator_handle_cpu_req(PEMULATOR emu, CPU_STATUS cpustatus) {
+	switch (cpustatus) {
+	case CPU_GRAPHICS_REDRW:
+		return redraw(emu->gpu);
+	case CPU_GRAPHICS_CLEAR:
+		return gclear(emu->gpu);
+	}
 	return EMULATOR_STATUS_SUCCESS;
 }

@@ -5,6 +5,8 @@
 
 typedef unsigned int EMULATOR_STATUS;
 
+#define CHIP8_EMULATE (0x00000030)
+
 #define EMULATOR_STATUS_SUCCESS (EMULATOR_STATUS)0x00000000
 
 #define EMULATOR_STATUS_FAIL_01 (EMULATOR_STATUS)0xC0000001
@@ -24,4 +26,4 @@ typedef struct _EMULATOR {
 EMULATOR_STATUS initialise_emulator(PEMULATOR, void*);
 EMULATOR_STATUS emu_initialise_memory(PEMULATOR, void*);
 EMULATOR_STATUS emulator_start(PEMULATOR);
-EMULATOR_STATUS emulator_handle_cpu_req(CPU_STATUS);
+EMULATOR_STATUS emulator_handle_cpu_req(PEMULATOR, CPU_STATUS);

@@ -11,7 +11,6 @@ int main(int argc, char* argv[])
 		return 0x10;
 
 	EMULATOR emu;
-
 	initialise_emulator(&emu, argv[1]);
 
 	SDL_Event event;
