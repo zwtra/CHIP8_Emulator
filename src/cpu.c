@@ -43,7 +43,7 @@ CPU_STATUS fde_cycle(PCHIP8CPU cpu) {
 		cpu->index_reg = (void*)(ins & 0x0fff);
 		return CPU_STATUS_SUCCESS;
 	case 0xD000:
-		break;
+		return ins_type_dnnn(cpu, ins);
 	}
 
 	return CPU_STATUS_INVALID;
@@ -54,8 +54,23 @@ CPU_STATUS ins_type_zero(PCHIP8CPU cpu, WORD ins) {
 	case 0x00E0:
 		return CPU_GRAPHICS_CLEAR;
 	case 0x00EE:
-		cpu->program_counter = spop(&cpu->stack);
+		cpu->program_counter = (WORD*)spop(&cpu->stack);
 		return CPU_STATUS_SUCCESS;
 	}
 	return CPU_STATUS_INVALID;
+}
+
+CPU_STATUS ins_type_dnnn(PCHIP8CPU cpu, WORD ins) {
+	int spr_col = 0; // collision flag, set to 1 if sprite turns any pixels off
+	WORD x_pos, y_pos, height;
+	BYTE* ind_ptr = (BYTE*)(cpu->base + (int)cpu->index_reg);
+
+	x_pos = cpu->reg_v[(ins & 0x0f00) >> 0x8];
+	y_pos = cpu->reg_v[(ins & 0x00f0) >> 0x4];
+	height = cpu->reg_v[ins & 0x000f];
+	x_pos = x_pos % 64;
+	y_pos = y_pos % 32;
+
+	return CPU_STATUS_SUCCESS;
+
 }

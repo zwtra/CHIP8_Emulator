@@ -28,6 +28,7 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 	// Set Base Address of program in CPU struct
 
 	emu->cpu->base = (BYTE*)emu->memory;
+	emu->cpu->frame_buffer = emu->gpu->s_frame_buf;
 
 	return EMULATOR_STATUS_SUCCESS;
 }
@@ -52,12 +53,18 @@ EMULATOR_STATUS emulator_start(PEMULATOR emu) {
 	while ((int)emu->cpu->program_counter < (int)(emu->program_size + 0x200)) { // gross casts
 		cpu_return = fde_cycle(emu->cpu);
 		if (cpu_return) {
-			emulator_handle_cpu_req(cpu_return);
+			emulator_handle_cpu_req(emu, cpu_return);
 		}
 	}
 	return EMULATOR_STATUS_SUCCESS;
 }
 
-EMULATOR_STATUS emulator_handle_cpu_req(CPU_STATUS cpustatus) {
+EMULATOR_STATUS emulator_handle_cpu_req(PEMULATOR emu, CPU_STATUS cpustatus) {
+	switch (cpustatus) {
+	case CPU_GRAPHICS_REDRW:
+		return redraw(emu->gpu);
+	case CPU_GRAPHICS_CLEAR:
+		return gclear(emu->gpu);
+	}
 	return EMULATOR_STATUS_SUCCESS;
 }

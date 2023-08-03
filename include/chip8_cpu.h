@@ -18,9 +18,12 @@ typedef struct _CHIP8CPU {
 	BYTE* base;
 	WORD* program_counter;
 	void* index_reg;
+	void* frame_buffer;
+
 	char timers[2];
 	char reg_v[16];
 	STACK stack;
+
 } CHIP8CPU, *PCHIP8CPU;
 
 PCHIP8CPU initialise_cpu();

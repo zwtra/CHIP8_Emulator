@@ -14,11 +14,19 @@ int main(int argc, char* argv[])
 
 	initialise_emulator(&emu, argv[1]);
 
+	emu.gpu->s_frame_buf[0] = 0xa1;
+	emu.gpu->s_frame_buf[0xff] = 0x81;
+
+	convert_pixel_format(emu.gpu);
+
+	redraw(emu.gpu);
+
 	SDL_Event event;
+
+	//emulator_start(&emu);
 
 	while (1) {
 		SDL_PollEvent(&event);
-		emulator_start(&emu);
 	}
 
 	return 0;
