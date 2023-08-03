@@ -28,7 +28,7 @@ EMULATOR_STATUS initialise_emulator(PEMULATOR emu, void* program) {
 	// Set Base Address of program in CPU struct
 
 	emu->cpu->base = (BYTE*)emu->memory;
-	emu->cpu->frame_buffer = emu->gpu->s_frame_buf;
+	emu->cpu->frame_buf = emu->gpu->s_frame_buf;
 
 	return EMULATOR_STATUS_SUCCESS;
 }

@@ -62,14 +62,18 @@ CPU_STATUS ins_type_zero(PCHIP8CPU cpu, WORD ins) {
 
 CPU_STATUS ins_type_dnnn(PCHIP8CPU cpu, WORD ins) {
 	int spr_col = 0; // collision flag, set to 1 if sprite turns any pixels off
-	WORD x_pos, y_pos, height;
+	WORD x_pos, y_pos, sprite_rows;
 	BYTE* ind_ptr = (BYTE*)(cpu->base + (int)cpu->index_reg);
 
 	x_pos = cpu->reg_v[(ins & 0x0f00) >> 0x8];
 	y_pos = cpu->reg_v[(ins & 0x00f0) >> 0x4];
-	height = cpu->reg_v[ins & 0x000f];
+	sprite_rows = cpu->reg_v[ins & 0x000f];
 	x_pos = x_pos % 64;
 	y_pos = y_pos % 32;
+
+	for (int spr_row = 0; spr_row < sprite_rows; spr_row++) {
+
+	}
 
 	return CPU_STATUS_SUCCESS;
 

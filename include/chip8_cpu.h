@@ -18,7 +18,7 @@ typedef struct _CHIP8CPU {
 	BYTE* base;
 	WORD* program_counter;
 	void* index_reg;
-	void* frame_buffer;
+	BYTE* frame_buf;
 
 	char timers[2];
 	char reg_v[16];
